@@ -64,13 +64,11 @@ countyPop <- get_acs(state = ACS_STATE, geography = "county", year = ACS_YEAR, s
 # Extract ZCTA population totals ------------------------------------------------------------------------------------------
 
 # zip code data must be extracted for whole country, not a selected state
-zctaPop <- get_acs(geography = "zcta", year = ACS_YEAR, survey = ACS_SURVEY, moe_level = ACS_MOE, 
+zctaPop <- get_acs(state = ACS_STATE, geography = "zcta", year = ACS_YEAR, survey = ACS_SURVEY, moe_level = ACS_MOE, 
                    variables = "B01001_001", summary_var = "B01001_001") # Note: this data frame will have two identical columns with the total population numbers
 
 zctaPop <- zctaPop %>% 
-              mutate(state = substring(GEOID,1,2),
-                     zip   = substring(GEOID,3,9)) %>%
-              filter(state == "06")
+              mutate(zip   = substring(GEOID,3,9)) 
 
 # Extract Census Tract population totals ------------------------------------------------------------------------------------------
 
